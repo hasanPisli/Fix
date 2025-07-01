@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixU - On-Demand Home Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4ade80;
+            --warning: #facc15;
+            --danger: #f87171;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 12px;
+            --shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #3ab4d9;
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 120px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
+            opacity: 0.1;
+        }
+        
+        .hero-content {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+        
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+            font-size: 1.4rem;
+        }
+        
+        /* How It Works */
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+        }
+        
+        .step-card h3 {
+            margin: 20px 0 15px;
+            color: var(--secondary);
+            font-size: 1.3rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(to right, #f5f7ff, #e6eeff);
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .client-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .rating {
+            color: var(--warning);
+            margin: 15px 0;
+            font-size: 1.2rem;
+        }
+        
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .slider-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        
+        .slider-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+        
+        /* Become Vendor CTA */
+        .become-vendor-cta {
+            background: linear-gradient(135deg, #3a0ca3, #4361ee);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: var(--border-radius);
+            margin: 50px 0;
+        }
+        
+        .become-vendor-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .become-vendor-cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Page Styles */
+        .page-header {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 10px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .breadcrumb a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 10px;
+            opacity: 0.7;
+        }
+        
+        /* Listings Page */
+        .search-section {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .search-input {
+            padding: 14px 20px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .listing-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .listing-image {
+            height: 200px;
+            background: linear-gradient(45deg, #4361ee, #4cc9f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+        
+        .listing-content {
+            padding: 20px;
+        }
+        
+        .listing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .listing-price {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .listing-rating {
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .listing-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .listing-meta {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            color: var(--gray);
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+        
+        .listing-meta i {
+            color: var(--primary);
+            margin-right: 5px;
+        }
+        
+        /* Detail Page */
+        .detail-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+        }
+        
+        .technician-profile {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .technician-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 4rem;
+            font-weight: bold;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .technician-rating {
+            margin: 15px 0;
+            color: var(--warning);
+            font-size: 1.2rem;
+        }
+        
+        .technician-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            text-align: center;
+            min-width: 100px;
+        }
+        
+        .meta-value {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .meta-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .calendar-container {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+        
+        .calendar-day {
+            text-align: center;
+            font-weight: bold;
+            color: var(--secondary);
+            padding: 15px 0;
+        }
+        
+        .calendar-date {
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--light);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .calendar-date:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+        
+        .calendar-date.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .calendar-date.unavailable {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #f8f9fa;
+        }
+        
+        .booking-form {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .reviews-section {
+            margin-top: 50px;
+        }
+        
+        .review-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .review-content {
+            line-height: 1.7;
+        }
+        
+        /* Form Pages */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--secondary);
+        }
+        
+        .form-description {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--gray);
+        }
+        
+        /* How it Works Page */
+        .workflow {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .step-number-large {
+            min-width: 70px;
+            height: 70px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .step-content h3 {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .steps-container {
+                flex-direction: column;
+            }
+            
+            .detail-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-step {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 70px 0;
+            }
+            
+            .form-container {
+                padding: 25px;
+            }
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            background: var(--light);
+        }
+        
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo" data-page="home">
+                    <i class="fas fa-tools"></i>
+                    FixU
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="listings">Services</a></li>
+                    <li><a href="#" class="nav-link" data-page="how-it-works">How It Works</a></li>
+                    <li><a href="#" class="nav-link" data-page="become-vendor">Become a Vendor</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#" class="btn btn-outline">Log In</a>
+                    <a href="#" class="btn">Sign Up</a>
+                </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Find Trusted Home Service Professionals</h1>
+                        <p>Book experienced technicians for all your home repair and maintenance needs. Quality service guaranteed with 100% satisfaction.</p>
+                        <div class="hero-buttons">
+                            <a href="#" class="btn" data-page="listings">Find Services</a>
+                            <a href="#" class="btn btn-outline" data-page="become-vendor">Become a Technician</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div style="background: linear-gradient(45deg, #4361ee, #4cc9f0); width: 100%; height: 350px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                            <i class="fas fa-home" style="font-size: 5rem; margin-right: 20px;"></i>
+                            <div style="text-align: left;">
+                                <h2 style="font-size: 2rem; margin-bottom: 10px;">Home Services Simplified</h2>
+                                <p style="font-size: 1.2rem;">Plumbing • Electrical • HVAC • Painting</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Service Categories</h2>
+                <p class="section-subtitle">Find the perfect service for your needs from our wide range of home maintenance and repair solutions.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-faucet"></i>
+                        </div>
+                        <h3>Plumbing</h3>
+                        <p>Leak repairs, pipe installations, drain cleaning, and more.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Electrical</h3>
+                        <p>Wiring, lighting installations, panel upgrades, and repairs.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <h3>HVAC</h3>
+                        <p>Heating, ventilation, and air conditioning services.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-paint-roller"></i>
+                        </div>
+                        <h3>Painting</h3>
+                        <p>Interior and exterior painting for homes and offices.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-hammer"></i>
+                        </div>
+                        <h3>Carpentry</h3>
+                        <p>Custom furniture, repairs, installations, and more.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-toilet"></i>
+                        </div>
+                        <h3>Bathroom Remodel</h3>
+                        <p>Complete bathroom renovations and upgrades.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <h3>Landscaping</h3>
+                        <p>Lawn care, garden design, and outdoor maintenance.</p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <h3>Moving Services</h3>
+                        <p>Professional packing, moving, and storage solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="section" style="background: #f8f9fa;">
+            <div class="container">
+                <h2 class="section-title">How FixU Works</h2>
+                <p class="section-subtitle">Getting your home services done has never been easier. Follow these simple steps:</p>
+                
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <i class="fas fa-search" style="font-size: 3rem; color: var(--primary);"></i>
+                        <h3>Find a Service</h3>
+                        <p>Browse our categories or search for the specific service you need.</p>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <i class="fas fa-calendar-check" style="font-size: 3rem; color: var(--primary);"></i>
+                        <h3>Book an Appointment</h3>
+                        <p>Select a date and time that works for your schedule.</p>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <i class="fas fa-user-cog" style="font-size: 3rem; color: var(--primary);"></i>
+                        <h3>Get Service Done</h3>
+                        <p>A qualified technician arrives and completes the job professionally.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="section testimonials">
+            <div class="container">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-subtitle">Don't just take our word for it - hear from homeowners who have used FixU services.</p>
+                
+                <div class="testimonial-slider">
+                    <div class="testimonial">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"The plumber arrived right on time and fixed our leaky faucet in no time. The service was professional and the pricing was transparent. I'll definitely use FixU again!"</p>
+                        <div class="client-info">
+                            <div class="client-avatar">SD</div>
+                            <div>
+                                <h4>Sarah D.</h4>
+                                <p>Homeowner</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-controls">
+                        <div class="slider-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </div>
+                        <div class="slider-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Become Vendor CTA -->
+        <div class="container">
+            <div class="become-vendor-cta">
+                <h2>Become a FixU Technician</h2>
+                <p>Join our network of skilled professionals and start earning money with your expertise. Flexible hours and competitive pay.</p>
+                <a href="#" class="btn btn-accent" data-page="become-vendor">Apply Now</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listings Page -->
+    <div id="listings-page" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Find Service Professionals</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#" data-page="home">Home</a></li>
+                    <li>Services</li>
+                </ul>
+            </div>
+        </div>
+        
+        <section class="section">
+            <div class="container">
+                <div class="search-section">
+                    <div class="search-form">
+                        <input type="text" class="search-input" placeholder="Search services...">
+                        <select class="search-input">
+                            <option value="">All Categories</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="electrical">Electrical</option>
+                            <option value="hvac">HVAC</option>
+                            <option value="painting">Painting</option>
+                            <option value="carpentry">Carpentry</option>
+                        </select>
+                        <input type="text" class="search-input" placeholder="Location...">
+                        <button class="btn">Search</button>
+                    </div>
+                </div>
+                
+                <div class="listings-grid">
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <i class="fas fa-faucet"></i>
+                        </div>
+                        <div class="listing-content">
+                            <div class="listing-header">
+                                <div class="listing-price">$75/hr</div>
+                                <div class="listing-rating">
+                                    <i class="fas fa-star"></i>
+                                    4.9
+                                </div>
+                            </div>
+                            <h3 class="listing-title">Emergency Plumbing Services</h3>
+                            <p>24/7 plumbing solutions for leaks, clogs, and installations.</p>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> John Smith</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Downtown</span>
+                            </div>
+                            <button class="btn" style="width: 100%; margin-top: 15px;" data-page="listing-detail">Book Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="listing-content">
+                            <div class="listing-header">
+                                <div class="listing-price">$65/hr</div>
+                                <div class="listing-rating">
+                                    <i class="fas fa-star"></i>
+                                    4.8
+                                </div>
+                            </div>
+                            <h3 class="listing-title">Electrical Wiring & Repair</h3>
+                            <p>Professional electrical services for homes and businesses.</p>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> Maria Garcia</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Westside</span>
+                            </div>
+                            <button class="btn" style="width: 100%; margin-top: 15px;" data-page="listing-detail">Book Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="listing-content">
+                            <div class="listing-header">
+                                <div class="listing-price">$85/hr</div>
+                                <div class="listing-rating">
+                                    <i class="fas fa-star"></i>
+                                    4.9
+                                </div>
+                            </div>
+                            <h3 class="listing-title">HVAC Installation</h3>
+                            <p>Heating and cooling system installation and maintenance.</p>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> Robert Johnson</span>
+                                <span><i class="fas fa-map-marker-alt"></i> North Area</span>
+                            </div>
+                            <button class="btn" style="width: 100%; margin-top: 15px;" data-page="listing-detail">Book Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <i class="fas fa-paint-roller"></i>
+                        </div>
+                        <div class="listing-content">
+                            <div class="listing-header">
+                                <div class="listing-price">$55/hr</div>
+                                <div class="listing-rating">
+                                    <i class="fas fa-star"></i>
+                                    4.7
+                                </div>
+                            </div>
+                            <h3 class="listing-title">Interior Painting</h3>
+                            <p>Professional painting services for your home or office.</p>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> David Wilson</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Central</span>
+                            </div>
+                            <button class="btn" style="width: 100%; margin-top: 15px;" data-page="listing-detail">Book Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <i class="fas fa-hammer"></i>
+                        </div>
+                        <div class="listing-content">
+                            <div class="listing-header">
+                                <div class="listing-price">$70/hr</div>
+                                <div class="listing-rating">
+                                    <i class="fas fa-star"></i>
+                                    4.8
+                                </div>
+                            </div>
+                            <h3 class="listing-title">Custom Carpentry</h3>
+                            <p>Custom furniture, shelves, and home improvements.</p>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> Michael Brown</span>
+                                <span><i class="fas fa-map-marker-alt"></i> Eastside</span>
+                            </div>
+                            <button class="btn" style="width: 100%; margin-top: 15px;" data-page="listing-detail">Book Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="listing-content">
+                            <div class="listing-header">
+                                <div class="listing-price">$60/hr</div>
+                                <div class="listing-rating">
+                                    <i class="fas fa-star"></i>
+                                    4.6
+                                </div>
+                            </div>
+                            <h3 class="listing-title">Landscaping & Garden Care</h3>
+                            <p>Lawn maintenance, garden design, and outdoor improvements.</p>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> Jennifer Lee</span>
+                                <span><i class="fas fa-map-marker-alt"></i> South Area</span>
+                            </div>
+                            <button class="btn" style="width: 100%; margin-top: 15px;" data-page="listing-detail">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Listing Detail Page -->
+    <div id="listing-detail-page" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Service Professional Profile</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#" data-page="home">Home</a></li>
+                    <li><a href="#" data-page="listings">Services</a></li>
+                    <li>John's Plumbing</li>
+                </ul>
+            </div>
+        </div>
+        
+        <section class="section">
+            <div class="container">
+                <div class="detail-container">
+                    <div>
+                        <div class="technician-profile">
+                            <div class="technician-avatar">JS</div>
+                            <h2>John Smith</h2>
+                            <div class="technician-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.8 (142 reviews)</span>
+                            </div>
+                            <p>Licensed plumber with 15+ years of experience. Specializing in emergency repairs, pipe installations, and bathroom renovations.</p>
+                            
+                            <div class="technician-meta">
+                                <div class="meta-item">
+                                    <div class="meta-value">12+</div>
+                                    <div class="meta-label">Years Exp</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-value">98%</div>
+                                    <div class="meta-label">Success Rate</div>
+                                </div>
+                                <div class="meta-item">
+                                    <div class="meta-value">572</div>
+                                    <div class="meta-label">Jobs Done</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="reviews-section">
+                            <h2 style="margin-bottom: 30px;">Customer Reviews</h2>
+                            
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="reviewer">
+                                        <div class="review-avatar">SD</div>
+                                        <div>
+                                            <h4>Sarah D.</h4>
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="review-date">May 15, 2023</div>
+                                </div>
+                                <div class="review-content">
+                                    <p>John arrived on time and fixed our leaking pipe quickly. He was professional, clean, and explained everything he was doing. Highly recommend his services!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="reviewer">
+                                        <div class="review-avatar">MT</div>
+                                        <div>
+                                            <h4>Michael T.</h4>
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="review-date">April 28, 2023</div>
+                                </div>
+                                <div class="review-content">
+                                    <p>Excellent service! John installed our new bathroom fixtures perfectly. His attention to detail was impressive. Will definitely call him again for future plumbing needs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <h3>Select Date & Time</h3>
+                                <div>July 2023</div>
+                            </div>
+                            
+                            <div class="calendar-grid">
+                                <div class="calendar-day">Sun</div>
+                                <div class="calendar-day">Mon</div>
+                                <div class="calendar-day">Tue</div>
+                                <div class="calendar-day">Wed</div>
+                                <div class="calendar-day">Thu</div>
+                                <div class="calendar-day">Fri</div>
+                                <div class="calendar-day">Sat</div>
+                                
+                                <!-- Calendar dates -->
+                                <div class="calendar-date unavailable">25</div>
+                                <div class="calendar-date unavailable">26</div>
+                                <div class="calendar-date unavailable">27</div>
+                                <div class="calendar-date unavailable">28</div>
+                                <div class="calendar-date unavailable">29</div>
+                                <div class="calendar-date">30</div>
+                                <div class="calendar-date">1</div>
+                                <div class="calendar-date">2</div>
+                                <div class="calendar-date">3</div>
+                                <div class="calendar-date">4</div>
+                                <div class="calendar-date active">5</div>
+                                <div class="calendar-date">6</div>
+                                <div class="calendar-date">7</div>
+                                <div class="calendar-date">8</div>
+                                <div class="calendar-date">9</div>
+                                <div class="calendar-date">10</div>
+                                <div class="calendar-date">11</div>
+                                <div class="calendar-date">12</div>
+                                <div class="calendar-date">13</div>
+                                <div class="calendar-date">14</div>
+                                <div class="calendar-date">15</div>
+                                <div class="calendar-date">16</div>
+                                <div class="calendar-date">17</div>
+                                <div class="calendar-date">18</div>
+                                <div class="calendar-date">19</div>
+                                <div class="calendar-date">20</div>
+                                <div class="calendar-date">21</div>
+                                <div class="calendar-date">22</div>
+                                <div class="calendar-date">23</div>
+                                <div class="calendar-date">24</div>
+                                <div class="calendar-date">25</div>
+                                <div class="calendar-date">26</div>
+                                <div class="calendar-date">27</div>
+                                <div class="calendar-date">28</div>
+                            </div>
+                            
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label class="form-label">Select Time Slot</label>
+                                <select class="form-input">
+                                    <option value="">Choose a time</option>
+                                    <option value="9am">9:00 AM - 10:00 AM</option>
+                                    <option value="10am">10:00 AM - 11:00 AM</option>
+                                    <option value="11am">11:00 AM - 12:00 PM</option>
+                                    <option value="1pm">1:00 PM - 2:00 PM</option>
+                                    <option value="2pm">2:00 PM - 3:00 PM</option>
+                                    <option value="3pm">3:00 PM - 4:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="booking-form">
+                            <h3 style="margin-bottom: 20px;">Book Service</h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Service Type</label>
+                                <select class="form-input">
+                                    <option value="">Select a service</option>
+                                    <option value="leak">Leak Repair</option>
+                                    <option value="pipe">Pipe Installation</option>
+                                    <option value="drain">Drain Cleaning</option>
+                                    <option value="fixture">Fixture Installation</option>
+                                    <option value="other">Other Plumbing</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" class="form-input" placeholder="Full name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" placeholder="Email address">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-input" placeholder="Phone number">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Service Address</label>
+                                <textarea class="form-input" placeholder="Full address"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Special Requests</label>
+                                <textarea class="form-input form-textarea" placeholder="Any specific details about the job..."></textarea>
+                            </div>
+                            
+                            <button class="btn" style="width: 100%;">Confirm Booking</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Become Vendor Page -->
+    <div id="become-vendor-page" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Become a FixU Technician</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#" data-page="home">Home</a></li>
+                    <li>Become a Vendor</li>
+                </ul>
+            </div>
+        </div>
+        
+        <section class="section">
+            <div class="container">
+                <div class="form-container">
+                    <h2 class="form-title">Join Our Professional Network</h2>
+                    <p class="form-description">Apply to become a FixU service provider and start earning with your skills.</p>
+                    
+                    <form>
+                        <div class="tabs">
+                            <div class="tab active" data-target="personal-info">Personal Info</div>
+                            <div class="tab" data-target="service-details">Service Details</div>
+                            <div class="tab" data-target="documents">Documents</div>
+                            <div class="tab" data-target="availability">Availability</div>
+                        </div>
+                        
+                        <div class="tab-content active" id="personal-info">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input" placeholder="Your full name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" placeholder="Your email">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-input" placeholder="Your phone number">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-input" placeholder="Your full address"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="service-details">
+                            <div class="form-group">
+                                <label class="form-label">Service Category</label>
+                                <select class="form-input">
+                                    <option value="">Select your main service</option>
+                                    <option value="plumbing">Plumbing</option>
+                                    <option value="electrical">Electrical</option>
+                                    <option value="hvac">HVAC</option>
+                                    <option value="painting">Painting</option>
+                                    <option value="carpentry">Carpentry</option>
+                                    <option value="landscaping">Landscaping</option>
+                                    <option value="cleaning">Cleaning</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Years of Experience</label>
+                                <input type="number" class="form-input" placeholder="Number of years">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Service Description</label>
+                                <textarea class="form-input form-textarea" placeholder="Describe your services and expertise"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Hourly Rate ($)</label>
+                                <input type="number" class="form-input" placeholder="Your hourly rate">
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="documents">
+                            <div class="form-group">
+                                <label class="form-label">License/Certification (PDF)</label>
+                                <input type="file" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">ID Verification</label>
+                                <input type="file" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Portfolio/Work Samples (Optional)</label>
+                                <input type="file" class="form-input">
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="availability">
+                            <div class="form-group">
+                                <label class="form-label">Days Available</label>
+                                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                    <label style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Monday
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Tuesday
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Wednesday
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Thursday
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Friday
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Saturday
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 5px;">
+                                        <input type="checkbox"> Sunday
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Working Hours</label>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <select class="form-input">
+                                        <option value="">Start Time</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                    </select>
+                                    <select class="form-input">
+                                        <option value="">End Time</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" style="width: 100%; margin-top: 20px;">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- How It Works Page -->
+    <div id="how-it-works-page" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>How FixU Works</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#" data-page="home">Home</a></li>
+                    <li>How It Works</li>
+                </ul>
+            </div>
+        </div>
+        
+        <section class="section">
+            <div class="container">
+                <div class="workflow">
+                    <div class="workflow-step">
+                        <div class="step-number-large">1</div>
+                        <div class="step-content">
+                            <h3>Find the Right Service</h3>
+                            <p>Browse our extensive categories or use the search function to find the perfect service for your needs. Each service provider has a detailed profile with ratings, reviews, and pricing information to help you make an informed decision.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-number-large">2</div>
+                        <div class="step-content">
+                            <h3>Book Your Appointment</h3>
+                            <p>Select your preferred date and time from the technician's availability calendar. Provide details about your service needs and confirm your booking with a few simple steps. You'll receive instant confirmation and reminders as your appointment approaches.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-number-large">3</div>
+                        <div class="step-content">
+                            <h3>Receive Professional Service</h3>
+                            <p>Your technician arrives on time, fully equipped to handle your service request. They'll perform the job professionally and efficiently. After completion, you'll have the opportunity to review the service and provide feedback.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-number-large">4</div>
+                        <div class="step-content">
+                            <h3>Secure Payment</h3>
+                            <p>After satisfactory completion of the service, payment is processed securely through our platform. You can choose from multiple payment methods. FixU holds payment until you confirm the job is completed to your satisfaction.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 60px;">
+                    <h2 class="section-title">For Service Providers</h2>
+                    <p class="section-subtitle">How to join our network and start earning</p>
+                    
+                    <div class="workflow" style="margin-top: 40px;">
+                        <div class="workflow-step">
+                            <div class="step-number-large">1</div>
+                            <div class="step-content">
+                                <h3>Apply to Join</h3>
+                                <p>Complete our simple application form with your personal information, service details, and documentation. Our team reviews applications to ensure quality standards.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number-large">2</div>
+                            <div class="step-content">
+                                <h3>Set Up Your Profile</h3>
+                                <p>Once approved, create your professional profile showcasing your skills, experience, and service offerings. Set your availability and service areas.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number-large">3</div>
+                            <div class="step-content">
+                                <h3>Receive Service Requests</h3>
+                                <p>Get notified when customers request your services. Review job details and accept bookings that fit your schedule and expertise.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number-large">4</div>
+                            <div class="step-content">
+                                <h3>Get Paid Securely</h3>
+                                <p>After completing a job, payment is deposited directly to your account. FixU handles all billing and customer payments for you.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="btn" style="margin-top: 40px;" data-page="become-vendor">Apply to Become a Vendor</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact-page" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#" data-page="home">Home</a></li>
+                    <li>Contact</li>
+                </ul>
+            </div>
+        </div>
+        
+        <section class="section">
+            <div class="container">
+                <div class="form-container">
+                    <h2 class="form-title">Get in Touch</h2>
+                    <p class="form-description">Have questions or need support? We're here to help!</p>
+                    
+                    <form>
+                        <div class="form-group">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-input" placeholder="Your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" placeholder="Your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Subject</label>
+                            <select class="form-input">
+                                <option value="">Select a subject</option>
+                                <option value="support">Technical Support</option>
+                                <option value="billing">Billing Inquiry</option>
+                                <option value="vendor">Vendor Application</option>
+                                <option value="feedback">Feedback/Suggestion</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Message</label>
+                            <textarea class="form-input form-textarea" placeholder="How can we help you?"></textarea>
+                        </div>
+                        
+                        <button class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+                    
+                    <div style="margin-top: 40px; text-align: center;">
+                        <h3 style="margin-bottom: 20px;">Other Ways to Reach Us</h3>
+                        <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                            <div>
+                                <i class="fas fa-envelope" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px;"></i>
+                                <h4>Email</h4>
+                                <p>support@fixu.com</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-phone" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px;"></i>
+                                <h4>Phone</h4>
+                                <p>(800) 555-1234</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-map-marker-alt" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px;"></i>
+                                <h4>Office</h4>
+                                <p>123 Service Street, City, ST 12345</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <a href="#" class="logo" style="font-size: 1.8rem; margin-bottom: 20px; display: inline-block;">
+                        <i class="fas fa-tools"></i>
+                        FixU
+                    </a>
+                    <p>Connecting homeowners with trusted service professionals for all home repair and maintenance needs.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="home">Home</a></li>
+                        <li><a href="#" data-page="listings">Services</a></li>
+                        <li><a href="#" data-page="how-it-works">How It Works</a></li>
+                        <li><a href="#" data-page="become-vendor">Become a Vendor</a></li>
+                        <li><a href="#" data-page="contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Plumbing</a></li>
+                        <li><a href="#">Electrical</a></li>
+                        <li><a href="#">HVAC</a></li>
+                        <li><a href="#">Painting</a></li>
+                        <li><a href="#">Carpentry</a></li>
+                        <li><a href="#">Landscaping</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Service St, City, Country</li>
+                        <li><i class="fas fa-phone"></i> (800) 555-1234</li>
+                        <li><i class="fas fa-envelope"></i> support@fixu.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 8am-6pm</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 FixU. All rights reserved. | Privacy Policy | Terms of Service
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-link, .logo, .btn[data-page], .breadcrumb a');
+            
+            // Function to show a specific page
+            function showPage(pageId) {
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId + '-page').classList.add('active');
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+            
+            // Set up event listeners for navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    if (pageId) {
+                        showPage(pageId);
+                    }
+                });
+            });
+            
+            // Tabs functionality
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show corresponding content
+                    const target = tab.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+            
+            // Calendar date selection
+            const dates = document.querySelectorAll('.calendar-date:not(.unavailable)');
+            dates.forEach(date => {
+                date.addEventListener('click', () => {
+                    dates.forEach(d => d.classList.remove('active'));
+                    date.classList.add('active');
+                });
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinksContainer = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinksContainer.style.display = navLinksContainer.style.display === 'flex' ? 'none' : 'flex';
+            });
+        });
+    </script>
+</body>
+</html>
